@@ -1,5 +1,4 @@
 import allure
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from locators.order_page_locators import OrderPageLocators
 from pages.base_page import BasePage
@@ -52,7 +51,7 @@ class OrderPage(BasePage):
             return self.get_completed_today() > initial_value
 
         try:
-            WebDriverWait(self.driver, timeout).until(_increased)
+            self.wait_for_condition(_increased, timeout)
         except TimeoutException:
             pass
         return self.get_completed_today()

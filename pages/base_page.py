@@ -81,3 +81,12 @@ class BasePage:
             source.dispatchEvent(new DragEvent('dragend', {bubbles: true, cancelable: true, dataTransfer: dataTransfer}));
         """
         self.driver.execute_script(script, source_element, target_element)
+
+    def wait_url_changes(self, previous_url, timeout=15):
+        WebDriverWait(self.driver, timeout).until(lambda d: d.current_url != previous_url)
+
+    def wait_for_condition(self, condition_func, timeout=10):
+        return WebDriverWait(self.driver, timeout).until(condition_func)
+
+    def get_element_text(self, locator):
+        return self.driver.find_element(*locator).text.strip()

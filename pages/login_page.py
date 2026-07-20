@@ -17,9 +17,9 @@ class LoginPage(BasePage):
 
     @allure.step("Кликнуть по кнопке 'Войти'")
     def click_login_button(self, timeout=15):
-        current_url = self.driver.current_url
+        current_url = self.get_current_url()
         self.click_element(LoginPageLocators.LOGIN_BUTTON)
-        WebDriverWait(self.driver, timeout).until(lambda d: d.current_url != current_url)
+        self.wait_url_changes(current_url, timeout)
 
     @allure.step("Кликнуть по ссылке 'Восстановить пароль'")
     def click_restore_password_link(self):
@@ -32,7 +32,7 @@ class LoginPage(BasePage):
     @allure.step("Кликнуть по кнопке 'Выход'")
     def click_logout_button(self, timeout=15):
         self.click_element(LoginPageLocators.LOGOUT_BUTTON)
-        WebDriverWait(self.driver, timeout).until(EC.url_contains('login'))
+        self.wait_url_contains('login', timeout)
 
     @allure.step("Проверить открытие личного кабинета")
     def is_profile_displayed(self):

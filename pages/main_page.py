@@ -1,5 +1,4 @@
 import allure
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from locators.main_page_locators import MainPageLocators
 from pages.base_page import BasePage
@@ -71,11 +70,11 @@ class MainPage(BasePage):
     @allure.step("Получить номер заказа из модального окна")
     def get_order_number(self, timeout=15):
         try:
-            def _order_ready(driver):
-                text = driver.find_element(*MainPageLocators.ORDER_NUMBER_TEXT).text.strip()
+            def _order_ready(_driver):
+                text = self.get_element_text(MainPageLocators.ORDER_NUMBER_TEXT)
                 return text.isdigit() and text != '9999'
 
-            WebDriverWait(self.driver, timeout).until(_order_ready)
-            return self.driver.find_element(*MainPageLocators.ORDER_NUMBER_TEXT).text.strip()
+            self.wait_for_condition(_order_ready, timeout)
+            return self.get_element_text(MainPageLocators.ORDER_NUMBER_TEXT)
         except TimeoutException:
             return ''

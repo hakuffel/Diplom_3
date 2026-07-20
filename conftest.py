@@ -7,6 +7,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from data import BASE_URL, API_BASE_URL, REGISTER_ENDPOINT, USER_ENDPOINT
 from helpers import generate_email, generate_password, generate_name
+from pages.main_page import MainPage
+from pages.login_page import LoginPage
 
 
 @pytest.fixture(scope='session')
@@ -60,8 +62,6 @@ def registered_user():
 
 @pytest.fixture
 def order_flow(driver, registered_user):
-    from pages.main_page import MainPage
-    from pages.login_page import LoginPage
 
     main_page = MainPage(driver)
     login_page = LoginPage(driver)
